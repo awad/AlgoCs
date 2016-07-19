@@ -1,0 +1,143 @@
+using System;
+using System.Collections.Generic;
+					
+public class Node
+{
+	int value;
+	public Node left, right;
+	
+	public Node(int n)
+	{
+		value = n;
+		left = null;
+		right = null;
+	}
+	
+	public Node() { value = 0; }
+	
+	public void InOrderPrint()
+	{
+		if(left!=null)
+			left.InOrderPrint();
+		
+		Console.Write(value + " ");
+	
+		if(right!= null)
+			right.InOrderPrint();
+	}
+	
+	public void LevelWisePrint()
+	{
+		Queue<Node> queue = new Queue<Node>();
+		Console.WriteLine(value);
+		
+		queue.Enqueue(left);
+		queue.Enqueue(right);
+		
+		Node temp;
+		while(queue.Count > 0)
+		{
+			temp = queue.Dequeue();
+			Console.Write(temp.value + "\t");
+			
+			if(temp.left != null) 
+				queue.Enqueue(temp.left);
+			
+			if(temp.right != null) 
+				queue.Enqueue(temp.right);
+			
+			if(queue.Count == 0) break;
+			temp = queue.Dequeue();
+			Console.Write(temp.value);
+			
+			if(temp.left != null) 
+				queue.Enqueue(temp.left);
+			
+			if(temp.right != null) 
+				queue.Enqueue(temp.right);
+			
+			Console.WriteLine();
+		
+		}
+		
+	}
+	
+	public void Insert(Node node)
+	{
+		Node temp = this;
+		
+		bool flag = true;
+		Node parent = this;
+		while(temp != null)
+		{
+			flag = !flag;
+			if(temp.left == null)
+			{
+				temp.left = node;
+				break;
+			}
+			if(temp.right == null)
+			{
+				temp.right = node;
+				break;
+			}
+			
+			if(!flag)
+				temp = parent.left;
+			else
+			{
+				temp = parent.right;
+				parent = temp;
+			}
+		}
+	}
+	
+	public void LevelWisePrint2()
+	{
+		Node temp = this;
+		
+		bool flag = true;
+		Node parent = this;
+		Console.Write(value);
+		while(temp != null)
+		{
+			Console.WriteLine();
+
+			flag = !flag;
+			if(temp.left != null)
+				Console.Write(temp.left.value + "\t");
+				
+			
+			if(temp.right != null)
+				Console.Write(temp.right.value + "\t");			
+			
+			
+			if(!flag)
+				temp = parent.left;
+			else
+			{
+				temp = parent.right;
+				parent = temp;
+			}
+		}
+	}
+}
+	
+
+public class Program
+{
+	public static void Main()
+	{
+		
+		Node root = new Node(5);
+		int count = 1;
+		while (count++ < 10)
+		{
+			root.Insert(new Node(count));
+		}
+		
+		root.LevelWisePrint();
+		Console.WriteLine();
+		root.LevelWisePrint2();
+	}
+}
