@@ -1,4 +1,3 @@
-// https://dotnetfiddle.net/KAdBPr
 using System;
 using System.Collections.Generic;
 					
@@ -30,7 +29,7 @@ public class Node
 	public void LevelWisePrint()
 	{
 		Queue<Node> queue = new Queue<Node>();
-		Console.WriteLine(value);
+		Console.Write(value + "\t");
 		
 		queue.Enqueue(left);
 		queue.Enqueue(right);
@@ -49,19 +48,59 @@ public class Node
 			
 			if(queue.Count == 0) break;
 			temp = queue.Dequeue();
-			Console.Write(temp.value);
+			Console.Write(temp.value + "\t" );
 			
 			if(temp.left != null) 
 				queue.Enqueue(temp.left);
 			
 			if(temp.right != null) 
 				queue.Enqueue(temp.right);
-			
-			Console.WriteLine();
-		
+				
 		}
 		
 	}
+	
+	//Working
+	public void LevelWisePrint3()
+	{
+		Queue<Node> parent = new Queue<Node>();
+		Queue<Node> queue = new Queue<Node>();
+		Console.Write(value + "\t");
+		
+		queue.Enqueue(this);
+		
+		Node temp;
+		while(queue.Count > 0)
+		{
+			parent = queue;
+			queue = new Queue<Node>();
+			Console.WriteLine();
+	
+			while(parent.Count > 0)
+			{
+				temp = parent.Dequeue();
+			
+				if(temp.left != null) 
+				{
+					queue.Enqueue(temp.left);
+					Console.Write(temp.left.value);
+				}
+					
+				Console.Write("\t");
+				if(temp.right != null) 
+				{
+					queue.Enqueue(temp.right);
+					Console.Write(temp.right.value);
+				}
+				Console.Write("\t");
+			}
+					
+		}
+		
+	}
+	
+	
+	
 	
 	public void Insert(Node node)
 	{
@@ -97,14 +136,11 @@ public class Node
 	{
 		Node temp = this;
 		
-		bool flag = true;
-		Node parent = this;
-		Console.Write(value);
+		bool flag = false;
+		Node parent = null;
+		Console.WriteLine(value);
 		while(temp != null)
 		{
-			Console.WriteLine();
-
-			flag = !flag;
 			if(temp.left != null)
 				Console.Write(temp.left.value + "\t");
 				
@@ -112,6 +148,10 @@ public class Node
 			if(temp.right != null)
 				Console.Write(temp.right.value + "\t");			
 			
+			if(parent == null){
+				parent = temp;
+				Console.WriteLine();
+			}
 			
 			if(!flag)
 				temp = parent.left;
@@ -119,6 +159,7 @@ public class Node
 			{
 				temp = parent.right;
 				parent = temp;
+				Console.WriteLine();
 			}
 		}
 	}
@@ -130,15 +171,16 @@ public class Program
 	public static void Main()
 	{
 		
-		Node root = new Node(5);
-		int count = 1;
-		while (count++ < 10)
-		{
-			root.Insert(new Node(count));
-		}
+		Node root = new Node(20);
+		root.left = new Node(10);
+		root.right = new Node(30);
+		root.left.left = new Node(5);
+		root.left.right = new Node(15);
+		root.right.right = new Node(35);
 		
-		root.LevelWisePrint();
+		root.LevelWisePrint3();
+		
 		Console.WriteLine();
-		root.LevelWisePrint2();
+		root.InOrderPrint();
 	}
 }
