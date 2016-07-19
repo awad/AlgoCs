@@ -132,37 +132,7 @@ public class Node
 		}
 	}
 	
-	public void LevelWisePrint2()
-	{
-		Node temp = this;
-		
-		bool flag = false;
-		Node parent = null;
-		Console.WriteLine(value);
-		while(temp != null)
-		{
-			if(temp.left != null)
-				Console.Write(temp.left.value + "\t");
-				
-			
-			if(temp.right != null)
-				Console.Write(temp.right.value + "\t");			
-			
-			if(parent == null){
-				parent = temp;
-				Console.WriteLine();
-			}
-			
-			if(!flag)
-				temp = parent.left;
-			else
-			{
-				temp = parent.right;
-				parent = temp;
-				Console.WriteLine();
-			}
-		}
-	}
+	
 }
 	
 
@@ -177,6 +147,11 @@ public class Program
 		root.left.left = new Node(5);
 		root.left.right = new Node(15);
 		root.right.right = new Node(35);
+		root.left.left.left = new Node(2);
+
+		root.LevelWisePrint();
+		Console.WriteLine();		
+		Console.WriteLine();		
 		
 		root.LevelWisePrint3();
 		
