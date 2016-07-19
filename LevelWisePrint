@@ -99,43 +99,6 @@ public class Node
 		
 	}
 	
-	
-	
-	
-	public void Insert(Node node)
-	{
-		Node temp = this;
-		
-		bool flag = true;
-		Node parent = this;
-		while(temp != null)
-		{
-			flag = !flag;
-			if(temp.left == null)
-			{
-				temp.left = node;
-				break;
-			}
-			if(temp.right == null)
-			{
-				temp.right = node;
-				break;
-			}
-			
-			if(!flag)
-				temp = parent.left;
-			else
-			{
-				temp = parent.right;
-				parent = temp;
-			}
-		}
-	}
-	
-	
-}
-	
-
 public class Program
 {
 	public static void Main()
