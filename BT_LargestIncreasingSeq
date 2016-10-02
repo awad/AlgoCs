@@ -1,0 +1,37 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public int LongestConsecutive(TreeNode root) {
+        if(root == null) return 0;
+        int max = 1;
+        int maxL = LargestConsecutiveHelper(root.left , max, root.val);
+        int maxR = LargestConsecutiveHelper(root.right , max, root.val);
+        
+        max = Math.Max(maxL, max);
+        max = Math.Max(maxR, max);
+        
+        return max;
+    }
+    public int LargestConsecutiveHelper(TreeNode root, int count, int val) {
+        if(root == null) return count;
+        
+        if(root.val == val + 1) count++;
+        else count = 1;
+        
+        int maxLeft = LargestConsecutiveHelper(root.left, count, root.val);
+        int maxRight = LargestConsecutiveHelper(root.right, count, root.val);
+    
+        count = Math.Max(maxRight, count);
+        count = Math.Max(maxLeft, count);
+        
+        return count;
+    }
+        
+}
