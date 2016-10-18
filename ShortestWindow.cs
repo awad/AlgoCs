@@ -14,33 +14,30 @@ public class Solution {
         int size = int.MaxValue;
         int cur = 0;
         
-        int minLeft, minRight;
-        minLeft = minRight = -1;
+        int minLeft;
+        minLeft = -1;
         for(int i=0; i<s.Length; i++)
         {
-            if(count < t.Length)
+            if(dict.TryGetValue(s[i], out value))
             {
-                if(dict.TryGetValue(s[i], out value))
+                if(left == -1) 
                 {
-                    if(left == -1) 
-                    {
-                        left = i;
-                    }
-                    if(value > 0) {
-                        count++;
-                    }
-                    dict[s[i]]--;
+                    left = i;
                 }
+                if(value > 0) {
+                    count++;
+                }
+                dict[s[i]]--;
             }
+            
             bool flag;
-            while(count == t.Length && left<s.Length)
+            while(count == t.Length)
             {
-                cur = i - left;
+                cur = i - left + 1;
                 if(cur <= size)
                 {
                     size = cur;
                     minLeft = left;
-                    minRight = i;
                 }
                 if(dict.TryGetValue(s[left], out value))
                 {
@@ -52,7 +49,6 @@ public class Solution {
         }
         if(minLeft == -1)
             return "";
-        // Console.WriteLine("{0} {1}", minLeft, minRight);
-        return s.Substring(minLeft, minRight-minLeft+1);
+        return s.Substring(minLeft, size);
     }
 }
