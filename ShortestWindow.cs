@@ -10,27 +10,24 @@ public class Solution {
                 dict[t[i]]=1;
         }
         
-        int left = -1; int count = 0;
+        int left = 0; int count = 0;
         int size = int.MaxValue;
         int cur = 0;
+        int minLeft = -1;
         
-        int minLeft;
-        minLeft = -1;
         for(int i=0; i<s.Length; i++)
         {
+            //Move right till we have a valid solution
             if(dict.TryGetValue(s[i], out value))
             {
-                if(left == -1) 
-                {
-                    left = i;
-                }
+                //value = 0 if character has been hit all the times it is needed.
                 if(value > 0) {
                     count++;
                 }
                 dict[s[i]]--;
             }
             
-            bool flag;
+            //Valid solution found
             while(count == t.Length)
             {
                 cur = i - left + 1;
@@ -39,11 +36,14 @@ public class Solution {
                     size = cur;
                     minLeft = left;
                 }
+                
+                //Remove s[left] till we have a invalid string again
                 if(dict.TryGetValue(s[left], out value))
                 {
                     if(dict[s[left]]++ == 0)
                         count--;
                 }
+                //try to find next left pointer
                 left++;
             }
         }
